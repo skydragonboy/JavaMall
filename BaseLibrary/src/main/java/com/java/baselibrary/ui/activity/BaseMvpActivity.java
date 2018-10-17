@@ -1,7 +1,16 @@
 package com.java.baselibrary.ui.activity;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+import com.java.baselibrary.common.BaseApplication;
+import com.java.baselibrary.injection.component.ActivityComponent;
+import com.java.baselibrary.injection.component.DaggerActivityComponent;
+import com.java.baselibrary.injection.module.ActivityModule;
 import com.java.baselibrary.presenter.BasePresenter;
 import com.java.baselibrary.presenter.view.BaseView;
+
+import javax.inject.Inject;
 
 /**
  * Created by Pan on 2018/10/15.
@@ -9,7 +18,19 @@ import com.java.baselibrary.presenter.view.BaseView;
 
 public class BaseMvpActivity<T extends BasePresenter> extends BaseActivity implements BaseView {
 
-    protected T mPresenter;
+
+    @Inject
+    public T mPresenter;
+
+    public ActivityComponent mActivityComponent;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initActivityInjection();
+
+
+    }
 
     @Override
     public void showLoding() {
@@ -24,6 +45,15 @@ public class BaseMvpActivity<T extends BasePresenter> extends BaseActivity imple
     @Override
     public void onError() {
 
+    }
+
+
+    private void initActivityInjection() {
+        mActivityComponent =  DaggerActivityComponent
+                .builder()
+                .appComponent(((BaseApplication) getApplication()).appComponent)
+                .activityModule(new ActivityModule(this))
+                .build();
     }
 
 

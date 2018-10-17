@@ -7,10 +7,11 @@ import android.widget.Toast;
 
 import com.java.baselibrary.ui.activity.BaseMvpActivity;
 import com.java.usercenter.R;
+import com.java.usercenter.injection.component.DaggerUserComponent;
 import com.java.usercenter.presenter.RegisterPresenter;
 import com.java.usercenter.presenter.view.RegisterView;
 
-public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> implements RegisterView ,View.OnClickListener{
+public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> implements RegisterView, View.OnClickListener {
 
 
     Button mRegisterBT;
@@ -20,13 +21,10 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        initInjection();
 
         mRegisterBT = findViewById(R.id.mRegisterBT);
         mRegisterBT.setOnClickListener(this);
-
-        mPresenter = new RegisterPresenter();
-        mPresenter.mView = this;
 
     }
 
@@ -37,8 +35,14 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.mRegisterBT){
+        if (v.getId() == R.id.mRegisterBT) {
             mPresenter.registerReq();
         }
     }
+
+    private void initInjection() {
+        DaggerUserComponent.create().inject(this);
+        mPresenter.mView = this;
+    }
+
 }
