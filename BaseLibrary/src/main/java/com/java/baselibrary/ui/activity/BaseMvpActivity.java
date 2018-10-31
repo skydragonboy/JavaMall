@@ -1,12 +1,12 @@
 package com.java.baselibrary.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.java.baselibrary.common.BaseApplication;
 import com.java.baselibrary.injection.component.ActivityComponent;
 import com.java.baselibrary.injection.component.DaggerActivityComponent;
 import com.java.baselibrary.injection.module.ActivityModule;
+import com.java.baselibrary.injection.module.LifecycleProviderModule;
 import com.java.baselibrary.presenter.BasePresenter;
 import com.java.baselibrary.presenter.view.BaseView;
 
@@ -24,8 +24,9 @@ public class BaseMvpActivity<T extends BasePresenter> extends BaseActivity imple
 
     public ActivityComponent mActivityComponent;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initActivityInjection();
 
@@ -49,10 +50,11 @@ public class BaseMvpActivity<T extends BasePresenter> extends BaseActivity imple
 
 
     private void initActivityInjection() {
-        mActivityComponent =  DaggerActivityComponent
+        mActivityComponent = DaggerActivityComponent
                 .builder()
                 .appComponent(((BaseApplication) getApplication()).appComponent)
                 .activityModule(new ActivityModule(this))
+                .lifecycleProviderModule(new LifecycleProviderModule(this))
                 .build();
     }
 

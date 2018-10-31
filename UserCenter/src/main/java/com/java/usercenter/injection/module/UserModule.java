@@ -1,8 +1,7 @@
 package com.java.usercenter.injection.module;
 
-import com.java.usercenter.presenter.RegisterPresenter;
-
-import javax.inject.Singleton;
+import com.java.usercenter.service.UserService;
+import com.java.usercenter.service.impl.UserServiceImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,6 +14,10 @@ import dagger.Provides;
 public class UserModule {
 
 
+    @Provides
+    public UserService provideUserService(UserServiceImpl userService) {
+        return userService;
+    }
 
 
 }

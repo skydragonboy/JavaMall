@@ -23,16 +23,40 @@ android {
 
 }
 
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compile "com.android.support:support-annotations:28.0.0"
 
-
+    //Dagger2
     compile 'com.google.dagger:dagger:2.17'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
 
+    // RxKotlin and RxAndroid
+    compile "io.reactivex.rxjava2:rxjava:2.2.3"
+    compile "io.reactivex.rxjava2:rxandroid:2.1.0"
+
+    //RxLifecycle
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-navi:2.1.0'
+
+    //Retrofit
+    compile "com.squareup.okhttp3:okhttp:${ok_http_version}"
+    compile "com.squareup.retrofit2:retrofit:${retrofit_version}"
+    compile "com.squareup.okhttp3:logging-interceptor:${ok_http_version}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofit_version}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${retrofit_version}"
+    compile "com.squareup.retrofit2:converter-scalars:${retrofit_version}"
+    //底部导航
+    compile 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
+
+
+}
+
+repositories {
+    google()
 }

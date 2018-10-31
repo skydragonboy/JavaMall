@@ -8,8 +8,10 @@ import android.widget.Toast;
 import com.java.baselibrary.ui.activity.BaseMvpActivity;
 import com.java.usercenter.R;
 import com.java.usercenter.injection.component.DaggerUserComponent;
+import com.java.usercenter.injection.module.UserModule;
 import com.java.usercenter.presenter.RegisterPresenter;
 import com.java.usercenter.presenter.view.RegisterView;
+
 
 public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> implements RegisterView, View.OnClickListener {
 
@@ -33,6 +35,7 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
         Toast.makeText(this, "注册成功", Toast.LENGTH_LONG).show();
     }
 
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.mRegisterBT) {
@@ -41,8 +44,17 @@ public class RegisterActivity extends BaseMvpActivity<RegisterPresenter> impleme
     }
 
     private void initInjection() {
-        DaggerUserComponent.create().inject(this);
+
+
+        DaggerUserComponent
+                .builder()
+                .activityComponent(mActivityComponent)
+                .userModule(new UserModule())
+                .build()
+                .inject(this);
+
         mPresenter.mView = this;
     }
+
 
 }
